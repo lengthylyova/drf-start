@@ -1,0 +1,9 @@
+DJANGO_DEBUG=True
+ALLOWED_HOSTS=["127.0.0.1", "0.0.0.0", "localhost"]
+SECRET_KEY=django-insecure-w)pk884wnqv_^j7xlu4my7bj!7!43%9*p36$8wr(dsd4iuhk5%
+
+DEFAULT_DB_PORT=5432
+DEFAULT_DB_USER=user
+DEFAULT_DB_NAME=database
+DEFAULT_DB_HOST=drfs-postgres
+DEFAULT_DB_PASSWORD=password

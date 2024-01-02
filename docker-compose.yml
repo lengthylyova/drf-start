@@ -1,0 +1,51 @@
+version: '3'
+
+volumes:
+  db_data: {}
+  db_data_backups: {}
+
+
+services:
+  drfs-postgres:
+    image: postgres:14
+    container_name: drfs-postgres
+    env_file:
+      - ./docker/postgres/.postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - db_data_backups:/backups
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "database", "-U", "user"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+
+  drfs-django:
+    image: drfs-django
+    container_name: drfs-django
+    build:
+      context: .
+      dockerfile: ./docker/django/dockerfile
+    volumes:
+      - .:/app:z
+    ports:
+      - '8000:8000'
+    env_file:
+      - ./docker/django/.django
+    depends_on:
+      - drfs-postgres
+    command: /start.sh
+
+  drfs-nginx:
+    image: drfs-nginx
+    container_name: drfs-nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/dockerfile
+    ports:
+      - '80:80'
+    links:
+      - drfs-django
+      - drfs-postgres
+    depends_on:
+      - drfs-django

@@ -1,0 +1,14 @@
+[
+    {
+        "model": "users.user",
+        "pk": 1,
+        "fields": {
+            "email": "fake@user.com",
+            "first_name": "for",
+            "last_name": "retrieve",
+            "password": "tests",
+            "is_staff": true,
+            "is_superuser": true
+        }
+    }
+]
